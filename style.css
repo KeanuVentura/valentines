@@ -1,0 +1,77 @@
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  overflow: hidden;
+}
+
+.container {
+  text-align: center;
+}
+
+.buttons {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+button {
+  font-size: 18px;
+  padding: 14px 32px;
+  width: 140px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#yesBtn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#noPlaceholder {
+  width: 140px;
+  height: auto;
+  position: relative;
+}
+
+#noBtn {
+  background-color: #f44336;
+  color: white;
+  position: fixed;  /* fixed so jumps can happen anywhere */
+  transition: left 0.5s ease, top 0.5s ease; /* smooth jumps */
+}
+
+@keyframes shake {
+    0% { transform: translate(0, 0) scale(var(--scale)); }
+    25% { transform: translate(2px, -1px) scale(var(--scale)); }
+    50% { transform: translate(-2px, 1px) scale(var(--scale)); }
+    75% { transform: translate(1px, -2px) scale(var(--scale)); }
+    100% { transform: translate(0, 0) scale(var(--scale)); }
+  }
+  
+  .shake {
+    animation: shake 0.15s ease-in-out;
+  }
+  
+
+@keyframes pop {
+  0% { transform: scale(var(--scale)); }
+  50% { transform: scale(calc(var(--scale) + 0.4)); }
+  100% { transform: scale(var(--scale)); }
+}
+
+.pop {
+  animation: pop 0.15s ease-in-out;
+}
+
+#yesBtn:active {
+  transform: scale(0.95); /* button slightly shrinks */
+  filter: brightness(0.9); /* slightly darker */
+  transition: transform 0.1s ease, filter 0.1s ease;
+}
