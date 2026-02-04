@@ -2,59 +2,33 @@ const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const response = document.getElementById("response");
 const title = document.querySelector("h1");
+const buttons = document.querySelector(".buttons");
 
-let hoverCount = 0;
-let yesScale = 1;
-let noIsClickable = false;
+let gameActive = true;
 let noClickCount = 0;
-let growStageStarted = false;
+let noCanBeClicked = false;
+let bossPhase = false; // starts after messages
+let noSize = 1; // scale factor for NO
+let firstBossClick = true; // for removing boss-phase message after first click
 
 const noMessages = [
   "you must've clicked no by accident",
-  "are you sure?",
-  "yes looks very tempting",
-  "wow that yes button looks very big and fun to click",
+  "third times a charm?",
+  "the yes looks very tempting",
+  "wow that yes button looks fun to click",
   "fine, you can click no"
 ];
 
-let noStartX, noStartY;
-
-window.addEventListener("load", () => {
-  response.style.minHeight = "24px";
-
+// Position NO button next to YES on load
+function positionNoInitially() {
   const yesRect = yesBtn.getBoundingClientRect();
-  noStartX = yesRect.right + 30;
-  noStartY = yesRect.top;
-
-  noBtn.style.left = `${noStartX}px`;
-  noBtn.style.top = `${noStartY}px`;
-});
-
-function resetNoButton() {
-  noBtn.style.left = `${noStartX}px`;
-  noBtn.style.top = `${noStartY}px`;
+  noBtn.style.left = `${yesRect.right + 30}px`;
+  noBtn.style.top = `${yesRect.top}px`;
 }
 
-function isOverlapping(r1, r2) {
-  return !(
-    r1.right < r2.left ||
-    r1.left > r2.right ||
-    r1.bottom < r2.top ||
-    r1.top > r2.bottom
-  );
-}
-
-noBtn.addEventListener("mouseover", () => {
-  if (noIsClickable) return;
-
-  hoverCount++;
-
-  if (hoverCount === 5) {
-    resetNoButton();
-    noIsClickable = true;
-    response.innerHTML = "Playing hard to get i see 😏";
-    return;
-  }
+// Move NO button randomly (while dodging)
+function moveNoButton() {
+  if (!gameActive || noCanBeClicked || bossPhase) return;
 
   const yesRect = yesBtn.getBoundingClientRect();
   const maxX = window.innerWidth - noBtn.offsetWidth;
@@ -71,92 +45,171 @@ noBtn.addEventListener("mouseover", () => {
 
     noRect = noBtn.getBoundingClientRect();
     attempts++;
-  } while (isOverlapping(noRect, yesRect) && attempts < 30);
-});
+  } while (
+    !(
+      noRect.right < yesRect.left ||
+      noRect.left > yesRect.right ||
+      noRect.bottom < yesRect.top ||
+      noRect.top > yesRect.bottom
+    ) &&
+    attempts < 50
+  );
+}
 
-noBtn.addEventListener("click", () => {
-  if (!noIsClickable) return;
+// Animate YES button
+function animateYes(effect) {
+  yesBtn.classList.remove("heartbeat", "shake");
+  void yesBtn.offsetWidth;
+  yesBtn.classList.add(effect);
+}
 
-  if (noClickCount === 4) {
-    yesBtn.style.visibility = "hidden";
-    title.style.display = "none";
+// Smoothly move NO button to center without jump
+function centerNoButtonSmooth() {
+  // Remove NO from flex container so it can be positioned freely
+  buttons.removeChild(noBtn);
+  document.body.appendChild(noBtn);
 
-    const centerX = window.innerWidth / 2 - noBtn.offsetWidth / 2;
-    const centerY = window.innerHeight / 2 - noBtn.offsetHeight / 2;
-    noBtn.style.left = `${centerX}px`;
-    noBtn.style.top = `${centerY}px`;
-
-    response.innerHTML = noMessages[noClickCount];
-    noClickCount++;
-    return;
-  }
-
-  if (noClickCount < 5) {
-    response.innerHTML = noMessages[noClickCount];
-
-    yesScale += 0.1;
-    yesBtn.style.transform = `scale(${yesScale})`;
-
-    noClickCount++;
-    return;
-  }
-
-  if (!growStageStarted) {
-    response.innerHTML = "you really thought i'd make it that easy for you";
-    growStageStarted = true;
-  } else if (growStageStarted && response.innerHTML !== "") {
-    response.innerHTML = "";
-  }
-
-  let currentScale = noBtn.dataset.scale
-    ? parseFloat(noBtn.dataset.scale)
-    : 1;
-
-  currentScale += 0.4;
-  noBtn.dataset.scale = currentScale;
-
-  if (noClickCount < 25) {
-    noBtn.style.setProperty("--scale", currentScale);
-    noBtn.classList.remove("shake");
-    void noBtn.offsetWidth;
-    noBtn.classList.add("shake");
-  } else if (noClickCount === 25) {
-    noBtn.textContent = "YES";
-    noBtn.style.backgroundColor = "#2ecc71";
-    noBtn.style.color = "white";
-    noBtn.style.transform = `scale(${currentScale})`;
-    noBtn.classList.remove("shake");
+  // get current position relative to viewport
+  const rect = noBtn.getBoundingClientRect();
   
-    // Add YES click effects to the NO->YES button
-    noBtn.addEventListener("click", () => {
-      response.innerHTML = "YAY!! 💖💖 I love you so much!";
-      noBtn.style.transform = "scale(0.9)";
-      noBtn.style.filter = "brightness(0.8)";
-      setTimeout(() => {
-        noBtn.style.transform = "scale(1)";
-        noBtn.style.filter = "brightness(1)";
-      }, 100);
-    }, { once: true }); // only trigger once
+  // apply position: fixed at current spot to prevent jump
+  noBtn.style.position = "fixed";
+  noBtn.style.left = `${rect.left}px`;
+  noBtn.style.top = `${rect.top}px`;
+
+  // force browser to register current position
+  void noBtn.offsetWidth;
+
+  // calculate target center position
+  const targetX = window.innerWidth / 2 - noBtn.offsetWidth / 2 - 20; // optional slight left
+  const targetY = window.innerHeight / 2;
+
+  // smooth transition
+  noBtn.style.transition = "left 0.5s ease, top 0.5s ease";
+  noBtn.style.left = `${targetX}px`;
+  noBtn.style.top = `${targetY}px`;
+
+  // place the message below the button
+  const messageOffset = noBtn.offsetHeight + 20; // 20px gap
+  response.style.position = "fixed";
+  response.style.left = `${window.innerWidth / 2}px`;
+  response.style.top = `${targetY + messageOffset}px`;
+  response.style.transform = "translateX(-50%)";
+}
+
+
+
+// Initial placement
+window.addEventListener("load", positionNoInitially);
+
+// NO hover moves
+noBtn.addEventListener("mouseenter", moveNoButton);
+
+// NO click
+// NO click
+noBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  // message sequence before boss phase
+  if (!noCanBeClicked) {
+    response.textContent = noMessages[noClickCount];
+
+    if (noClickCount % 2 === 0) {
+      animateYes("heartbeat");
+    } else {
+      animateYes("shake");
+    }
+
+    noClickCount++;
+
+    // After last message, start boss phase
+    if (noClickCount >= noMessages.length) {
+      noCanBeClicked = true;
+      bossPhase = true;
+
+      // show boss-phase message
+      response.textContent = "fine, but you're going to have to work for it";
+
+      // remove "Are you sure?" title
+      title.textContent = "";
+
+      // hide YES button
+      yesBtn.style.display = "none";
+
+      // center NO button
+      centerNoButtonSmooth();
+    }
+
+    moveNoButton();
+    return;
   }
 
-  noClickCount++;
+  // boss phase: first click removes message
+  if (bossPhase && firstBossClick) {
+    response.textContent = "";
+    firstBossClick = false;
+  }
+
+  // boss phase: NO grows with each click, max 40 clicks
+  if (bossPhase && noClickCount < 40) { 
+    noSize += 0.2;
+    noBtn.style.transform = `scale(${noSize})`;
+    noClickCount++;
+
+    // check for final 40th click
+    if (noClickCount === 40) {
+        // switch NO button to YES
+        noBtn.textContent = "YES";
+        noBtn.style.backgroundColor = "#2ecc71"; // green
+        noBtn.style.color = "white";
+
+        // dramatic push-down animation
+        noBtn.style.transition = "transform 0.1s ease, filter 0.1s ease";
+        noBtn.style.transform = `scale(${noSize * 0.9})`;
+        noBtn.style.filter = "brightness(0.8)";
+        setTimeout(() => {
+            noBtn.style.transform = `scale(${noSize})`;
+            noBtn.style.filter = "brightness(1)";
+        }, 100);
+
+        // after short delay, show "hehe" text
+        setTimeout(() => {
+            const heheText = document.createElement("p");
+            heheText.textContent = "hehe";
+            heheText.style.position = "fixed";
+            heheText.style.bottom = "20px";
+            heheText.style.left = "50%";
+            heheText.style.transform = "translateX(-50%)";
+            heheText.style.fontSize = "2rem";
+            heheText.style.color = "white";
+            heheText.style.fontFamily = "'Tahoma', Geneva, sans-serif";
+            document.body.appendChild(heheText);
+
+            // redirect to surprise.html after another second
+            setTimeout(() => {
+                window.location.href = "surprise.html";
+            }, 1000);
+        }, 1000); // initial push-down delay
+    }
+  }
 });
 
+
+// YES button logic
 yesBtn.addEventListener("click", () => {
-    response.innerHTML = "YAY!! 💖💖 I love you so much!";
-  
-    yesBtn.style.setProperty("--scale", 1); // initial scale for pop
-    yesBtn.classList.remove("pop");
-    void yesBtn.offsetWidth; 
-    yesBtn.classList.add("pop");
-  });
+  gameActive = false;
 
-yesBtn.addEventListener("mousedown", () => {
-  yesBtn.style.transform = "scale(0.9)";
-  yesBtn.style.filter = "brightness(0.8)";
-});
+  noBtn.style.position = "static";
+  yesBtn.style.position = "static";
 
-yesBtn.addEventListener("mouseup", () => {
-  yesBtn.style.transform = "scale(1)";
-  yesBtn.style.filter = "brightness(1)";
+  buttons.style.display = "flex";
+  buttons.style.justifyContent = "center";
+  buttons.style.gap = "30px";
+
+  title.textContent = "Are you sure?";
+  response.textContent = "";
+
+  yesBtn.classList.remove("pop");
+  void yesBtn.offsetWidth;
+  yesBtn.classList.add("pop");
 });

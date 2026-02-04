@@ -1,5 +1,6 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Tahoma', Geneva, sans-serif;
+  font-size: 1.5rem; /* 50% bigger than default 1rem */
   background: linear-gradient(to right, #ff758c, #ff7eb3);
   height: 100vh;
   display: flex;
@@ -9,6 +10,17 @@ body {
   overflow: hidden;
 }
 
+h1 {
+  font-family: 'Tahoma', Geneva, sans-serif;
+  font-size: 3rem; /* 50% bigger */
+}
+
+p, button, #noBtn, #yesBtn {
+  font-family: 'Tahoma', Geneva, sans-serif;
+  font-size: 1.5rem; /* 50% bigger */
+}
+
+/* container and buttons */
 .container {
   text-align: center;
 }
@@ -21,7 +33,6 @@ body {
 }
 
 button {
-  font-size: 18px;
   padding: 14px 32px;
   width: 140px;
   border: none;
@@ -43,11 +54,11 @@ button {
 #noBtn {
   background-color: #f44336;
   color: white;
-  position: fixed;  /* fixed so jumps can happen anywhere */
-  transition: left 0.5s ease, top 0.5s ease; /* smooth jumps */
+  position: fixed;
+  transition: left 0.35s ease, top 0.35s ease;
 }
-  
 
+/* animations */
 @keyframes pop {
   0% { transform: scale(var(--scale)); }
   50% { transform: scale(calc(var(--scale) + 0.4)); }
@@ -59,7 +70,36 @@ button {
 }
 
 #yesBtn:active {
-  transform: scale(0.95); /* button slightly shrinks */
-  filter: brightness(0.9); /* slightly darker */
+  transform: scale(0.95);
+  filter: brightness(0.9);
   transition: transform 0.1s ease, filter 0.1s ease;
+}
+
+@keyframes heartbeat {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.12); }
+  40%  { transform: scale(1); }
+  60%  { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+.heartbeat {
+  animation: heartbeat 0.6s ease;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.35s ease;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
