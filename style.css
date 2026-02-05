@@ -1,6 +1,7 @@
-body {
+/* ================= INDEX.HTML STYLES ================= */
+#indexPage {
   font-family: 'Tahoma', Geneva, sans-serif;
-  font-size: 1.5rem; /* 50% bigger than default 1rem */
+  font-size: 1.5rem;
   background: linear-gradient(to right, #ff758c, #ff7eb3);
   height: 100vh;
   display: flex;
@@ -10,29 +11,32 @@ body {
   overflow: hidden;
 }
 
-h1 {
+#indexPage h1 {
   font-family: 'Tahoma', Geneva, sans-serif;
-  font-size: 3rem; /* 50% bigger */
+  font-size: 3rem;
 }
 
-p, button, #noBtn, #yesBtn {
+#indexPage p, 
+#indexPage button, 
+#indexPage #noBtn, 
+#indexPage #yesBtn {
   font-family: 'Tahoma', Geneva, sans-serif;
-  font-size: 1.5rem; /* 50% bigger */
+  font-size: 1.5rem;
 }
 
 /* container and buttons */
-.container {
+#indexPage .container {
   text-align: center;
 }
 
-.buttons {
+#indexPage .buttons {
   margin-top: 30px;
   display: flex;
   justify-content: center;
   gap: 30px;
 }
 
-button {
+#indexPage button {
   padding: 14px 32px;
   width: 140px;
   border: none;
@@ -40,18 +44,18 @@ button {
   cursor: pointer;
 }
 
-#yesBtn {
+#indexPage #yesBtn {
   background-color: #4CAF50;
   color: white;
 }
 
-#noPlaceholder {
+#indexPage #noPlaceholder {
   width: 140px;
   height: auto;
   position: relative;
 }
 
-#noBtn {
+#indexPage #noBtn {
   background-color: #f44336;
   color: white;
   position: fixed;
@@ -65,11 +69,11 @@ button {
   100% { transform: scale(var(--scale)); }
 }
 
-.pop {
+#indexPage .pop {
   animation: pop 0.15s ease-in-out;
 }
 
-#yesBtn:active {
+#indexPage #yesBtn:active {
   transform: scale(0.95);
   filter: brightness(0.9);
   transition: transform 0.1s ease, filter 0.1s ease;
@@ -83,7 +87,7 @@ button {
   100% { transform: scale(1); }
 }
 
-.heartbeat {
+#indexPage .heartbeat {
   animation: heartbeat 0.6s ease;
 }
 
@@ -95,11 +99,51 @@ button {
   100% { transform: translateX(0); }
 }
 
-.shake {
+#indexPage .shake {
   animation: shake 0.35s ease;
 }
 
-@keyframes floatUp {
-  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+/* ================= SURPRISE.HTML STYLES ================= */
+#surprisePage {
+  font-family: 'Tahoma', Geneva, sans-serif;
+  font-size: 1.5rem;
+  background: linear-gradient(to right, #ff758c, #ff7eb3);
+  color: white;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+#surprisePage h1 {
+  font-size: 3rem;
+  margin-top: 40px;
+}
+
+/* clocks */
+#surprisePage .container { text-align: center; padding: 40px 20px; }
+#surprisePage .clockSection { margin-top: 80px; margin-bottom: 100px; }
+#surprisePage .clockSection h2 { font-size: 2rem; margin-bottom: 50px; }
+#surprisePage .clockBlocks { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+#surprisePage .clockBlockWrapper { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+#surprisePage .clockBlock { background-color: rgba(255,255,255,0.2); padding: 20px 30px; border-radius: 12px; font-size: 2.5rem; font-weight: bold; color: white; min-width: 80px; text-align: center; }
+#surprisePage .clockLabel { font-size: 1.2rem; font-weight: normal; color: #ffe6e6; }
+
+/* header image */
+#surprisePage .headerImage { display: block; margin: 60px auto 200px auto; border: 3px solid white; border-radius: 12px; max-width: 60%; height: auto; box-shadow: 0 4px 12px rgba(255,255,255,0.3); }
+
+/* gallery */
+#surprisePage #gallerySection { margin-top: 80px; text-align: center; }
+#surprisePage #gallerySection h1 {
+  margin-bottom: 100px; /* space between heading and images */
+}
+#surprisePage .galleryContainer { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); grid-auto-rows: 180px; gap: 15px; justify-items: center; align-items: center; padding: 20px 40px; }
+#surprisePage .galleryImage { border: 3px solid white; border-radius: 12px; box-shadow: 0 4px 12px rgba(255,255,255,0.3); width: 100%; height: 100%; object-fit: cover; transition: transform 0.2s ease; }
+#surprisePage .galleryImage:hover { transform: scale(1.05); }
+#surprisePage .galleryImage.horizontal { grid-column: span 2; grid-row: span 1.5; }
+#surprisePage .galleryImage.vertical { grid-row: span 2; }
+
+#surprisePage #gallerySection h1 {
+  margin-top: 200px; /* adjust to taste */
 }
