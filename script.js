@@ -13,7 +13,7 @@ let firstBossClick = true; // for removing boss-phase message after first click
 
 const noMessages = [
   "you must've clicked no by accident",
-  "third times a charm?",
+  "please?",
   "the yes looks very tempting",
   "wow that yes button looks fun to click",
   "fine, you can click no"

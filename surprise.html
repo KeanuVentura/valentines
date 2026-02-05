@@ -9,48 +9,34 @@
 <body id="surprisePage">
 
   <div class="container">
-    <h1>Happy One Year my Forever Valentine!</h1>
+    <h1 class="mainTitle">Happy One Year my Forever Valentine!</h1>
 
     <img src="images/image1.jpg" alt="M+K" class="headerImage">
 
-    <h1>Since the day I met you, </h1>
-    <h1>I’ve loved you more with every second</h1>
+    <!-- Clock typewriter lines -->
+<div id="clockLinesContainer" style="position: relative; height: 3rem; margin-bottom: 40px;">
+  <h1 id="typeLine1"></h1>
+  <h1 id="typeLine2"></h1>
+</div>
 
-    <!-- Clock sections -->
-    <section class="clockSection">
-      <h2>Time since we first met</h2>
-      <div id="metClock" class="clockBlocks"></div>
-    </section>
-  
-    <section class="clockSection">
-      <h2>Time since I've asked you to be my girlfriend</h2>
-      <div id="loveClock" class="clockBlocks"></div>
-    </section>
+<!-- Clock sections -->
+<section class="clockSection">
+  <h2>Time since we first met</h2>
+  <div id="metClock" class="clockBlocks"></div>
+</section>
+
+<section class="clockSection">
+  <h2>Time since I've asked you to be my girlfriend</h2>
+  <div id="loveClock" class="clockBlocks"></div>
+</section>
 
     <!-- Gallery section -->
     <section id="gallerySection">
-      <h1>Some of my favorite pictures</h1>
-      <div class="galleryContainer">
-        <img src="images/image2.jpg" alt="Memory 2" class="galleryImage horizontal">
-        <img src="images/image3.jpg" alt="Memory 3" class="galleryImage vertical">
-        <img src="images/image4.jpg" alt="Memory 4" class="galleryImage vertical">
-        <img src="images/image5.jpg" alt="Memory 5" class="galleryImage horizontal">
-        <img src="images/image6.jpg" alt="Memory 6" class="galleryImage vertical">
-        <img src="images/image7.jpg" alt="Memory 7" class="galleryImage horizontal">
-        <img src="images/image8.jpg" alt="Memory 8" class="galleryImage vertical">
-        <img src="images/image9.jpg" alt="Memory 9" class="galleryImage vertical">
-        <img src="images/image10.jpg" alt="Memory 10" class="galleryImage vertical">
-        <img src="images/image11.jpg" alt="Memory 11" class="galleryImage vertical">
-        <img src="images/image12.jpg" alt="Memory 12" class="galleryImage vertical">
-        <img src="images/image13.jpg" alt="Memory 13" class="galleryImage horizontal">
-        <img src="images/image14.jpg" alt="Memory 14" class="galleryImage vertical">
-        <img src="images/image15.jpg" alt="Memory 15" class="galleryImage horizontal">
-        <img src="images/image16.jpg" alt="Memory 16" class="galleryImage horizontal">
-        <img src="images/image17.jpg" alt="Memory 17" class="galleryImage vertical">
-        <img src="images/image18.jpg" alt="Memory 18" class="galleryImage horizontal">
-        <img src="images/image19.jpg" alt="Memory 19" class="galleryImage vertical">
-        <img src="images/image20.jpg" alt="Memory 20" class="galleryImage vertical">
-        <img src="images/image21.jpg" alt="Memory 21" class="galleryImage vertical">
+      <h1 id="galleryHeading"></h1>
+      <div class="galleryViewer">
+        <button id="prevBtn" class="galleryArrow">←</button>
+        <img id="currentGalleryImage" src="" alt="Gallery Image">
+        <button id="nextBtn" class="galleryArrow">→</button>
       </div>
     </section>
 
