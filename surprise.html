@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>M+K</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='24' font-size='24' fill='white'>❤</text></svg>">
 </head>
 <body id="surprisePage">
@@ -14,29 +15,33 @@
     <img src="images/image1.jpg" alt="M+K" class="headerImage">
 
     <!-- Clock typewriter lines -->
-<div id="clockLinesContainer" style="position: relative; height: 3rem; margin-bottom: 40px;">
-  <h1 id="typeLine1"></h1>
-  <h1 id="typeLine2"></h1>
-</div>
+    <div id="clockLinesContainer" style="position: relative; height: 3rem; margin-bottom: 40px;">
+      <h1 id="typeLine1"></h1>
+      <h1 id="typeLine2"></h1>
+    </div>
 
-<!-- Clock sections -->
-<section class="clockSection">
-  <h2>Time since we first met</h2>
-  <div id="metClock" class="clockBlocks"></div>
-</section>
+    <!-- Clock sections -->
+    <section class="clockSection">
+      <h2>Time since we first met</h2>
+      <div id="metClock" class="clockBlocks"></div>
+    </section>
 
-<section class="clockSection">
-  <h2>Time since I've asked you to be my girlfriend</h2>
-  <div id="loveClock" class="clockBlocks"></div>
-</section>
+    <section class="clockSection">
+      <h2>Time since I've asked you to be my girlfriend</h2>
+      <div id="loveClock" class="clockBlocks"></div>
+    </section>
 
     <!-- Gallery section -->
     <section id="gallerySection">
       <h1 id="galleryHeading"></h1>
       <div class="galleryViewer">
-        <button id="prevBtn" class="galleryArrow">←</button>
+        <button id="prevBtn" class="galleryArrow">
+          <i class="fas fa-arrow-left"></i>
+        </button>
         <img id="currentGalleryImage" src="" alt="Gallery Image">
-        <button id="nextBtn" class="galleryArrow">→</button>
+        <button id="nextBtn" class="galleryArrow">
+          <i class="fas fa-arrow-right"></i>
+        </button>
       </div>
     </section>
 

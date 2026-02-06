@@ -260,22 +260,23 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 5rem;          /* big chunky arrow */
-  font-weight: 900;         /* bold */
-  color: white;             /* pure white */
-  background: none;         /* no background */
-  border: none;             /* no border */
-  outline: none;            /* no outline */
+  font-size: 5rem;      /* big chunky arrow */
+  font-weight: 900;     /* bold */
+  color: white;         /* pure white */
+  background: none;     /* no background */
+  border: none;         /* no border */
+  outline: none;        /* no outline */
   cursor: pointer;
   user-select: none;
   padding: 0;
   z-index: 10;
+  transition: text-shadow 0.3s ease; /* smooth shadow on hover */
 }
 
 #prevBtn { left: 10px; }
 #nextBtn { right: 10px; }
 
 .galleryArrow:hover {
-  color: white;             /* stay white on hover */
-  text-shadow: none;        /* no shadow */
+  color: white;                       /* stay white */
+  text-shadow: 0 0 15px rgba(255,255,255,0.8); /* glowing shadow */
 }
