@@ -246,7 +246,7 @@ function showImage(index) {
       setOrientation(galleryImgEl);
       galleryImgEl.style.opacity = 1; // fade in
     };
-  }, 150); // slight delay for smooth fade
+  }, 100); // slight delay for smooth fade
 }
 
 // Initialize first image (no fade)
