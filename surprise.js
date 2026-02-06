@@ -1,3 +1,21 @@
+// --------------------------
+// Background music
+// --------------------------
+const music = new Audio("song.mp3");
+music.loop = true;
+
+// Resume from saved time if available
+const savedTime = localStorage.getItem("musicTime");
+if (savedTime) music.currentTime = parseFloat(savedTime);
+
+// Autoplay on first interaction (or try immediately)
+music.play().catch(e => console.log("Autoplay prevented:", e));
+
+// Save playback time every second
+setInterval(() => {
+  localStorage.setItem("musicTime", music.currentTime);
+}, 1000);
+
 // =========================
 // HEARTS
 // =========================

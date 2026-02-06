@@ -1,3 +1,20 @@
+const music = new Audio("song.mp3");
+music.loop = true;
+
+// Resume from previous time if available
+const savedTime = localStorage.getItem("musicTime");
+if (savedTime) music.currentTime = parseFloat(savedTime);
+
+// Play music on first user interaction (required for autoplay in browsers)
+document.body.addEventListener("click", () => {
+  music.play().catch(e => console.log("Autoplay prevented:", e));
+}, { once: true });
+
+// Save playback time every second
+setInterval(() => {
+  localStorage.setItem("musicTime", music.currentTime);
+}, 1000);
+
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
 const response = document.getElementById("response");
