@@ -16,6 +16,7 @@ const noMessages = [
   "please?",
   "the yes looks very tempting",
   "wow that yes button looks fun to click",
+  "fine, you can click no",
   "fine, you can click no"
 ];
 
@@ -128,7 +129,7 @@ noBtn.addEventListener("click", (e) => {
       bossPhase = true;
 
       // show boss-phase message
-      response.textContent = "fine, but you're going to have to work for it";
+      response.textContent = "but you're going to have to work for it";
 
       // remove "Are you sure?" title
       title.textContent = "";
