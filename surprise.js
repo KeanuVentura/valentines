@@ -298,3 +298,15 @@ const wheelObserver = new IntersectionObserver(entries => {
 }, { threshold: 1 });
 
 wheelObserver.observe(wheelHeadingEl);
+
+const loveLetterBtn = document.getElementById("loveLetterBtn");
+const loveLetterPopup = document.getElementById("loveLetterPopup");
+const closeLoveLetter = document.getElementById("closeLoveLetter");
+
+loveLetterBtn.addEventListener("click", () => {
+  loveLetterPopup.classList.add("show");
+});
+
+closeLoveLetter.addEventListener("click", () => {
+  loveLetterPopup.classList.remove("show");
+});
