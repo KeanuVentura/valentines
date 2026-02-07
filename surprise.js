@@ -1,21 +1,13 @@
-// =========================
-// BACKGROUND MUSIC (SURPRISE)
-// =========================
 const music = new Audio("song.mp3");
 music.loop = true;
 
-// resume from index page if available
 const carryTime = localStorage.getItem("carryMusicTime");
 if (carryTime) {
   music.currentTime = parseFloat(carryTime);
 }
 
-// autoplay on load (allowed because user already interacted)
 music.play().catch(() => {});
 
-// =========================
-// HEARTS
-// =========================
 const heartContainer = document.createElement("div");
 heartContainer.style.position = "fixed";
 heartContainer.style.top = 0;
@@ -63,9 +55,6 @@ function createHeart() {
 const heartInterval = setInterval(createHeart, 200);
 setTimeout(() => clearInterval(heartInterval), 5000);
 
-// =========================
-// CLOCKS
-// =========================
 function setupClock(clockId, startDate) {
   const clockContainer = document.getElementById(clockId);
   const labels = ["Days", "Hours", "Minutes", "Seconds"];
@@ -163,9 +152,6 @@ function setupClock(clockId, startDate) {
 const metClock = setupClock("metClock", new Date("2024-09-28T00:00:00"));
 const loveClock = setupClock("loveClock", new Date("2025-02-07T00:00:00"));
 
-// =========================
-// TYPEWRITER + FADE SEQUENTIAL
-// =========================
 const line1El = document.getElementById("typeLine1");
 const line2El = document.getElementById("typeLine2");
 
@@ -179,30 +165,24 @@ function typeWriterFade(el, text, callback) {
       el.textContent += text.charAt(i++);
       setTimeout(type, 75);
     } else {
-      // Wait 1 second before starting fade
       setTimeout(() => {
         el.style.transition = "opacity 1s ease";
         el.style.opacity = 0;
-
-        // Call callback after fade completes (1s)
         if (callback) {
           setTimeout(callback, 1000);
         }
-      }, 1000); // 1 second pause before fading
+      }, 1000);
     }
   }
 
   type();
 }
 
-
 const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      // Sequential typing: line 1 fades, then line 2 types at exact same spot
       typeWriterFade(line1El, "Since the day I met you", () => {
         typeWriterFade(line2El, "I’ve loved you more with every second", () => {
-          // Stop clocks after both lines
           setTimeout(() => { loveClock.stopUnit(3); metClock.stopUnit(3); }, 0);
           setTimeout(() => { loveClock.stopUnit(2); metClock.stopUnit(2); }, 1000);
           setTimeout(() => { loveClock.stopUnit(1); metClock.stopUnit(1); }, 2000);
@@ -217,9 +197,6 @@ const observer = new IntersectionObserver(entries => {
 
 observer.observe(line1El);
 
-// =========================
-// GALLERY
-// =========================
 const galleryImages = [
   "images/image2.jpg","images/image3.jpg","images/image4.jpg",
   "images/image5.jpg","images/image6.jpg","images/image7.jpg",
@@ -236,7 +213,6 @@ const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 const galleryHeadingEl = document.getElementById("galleryHeading");
 
-// Set image orientation (horizontal or vertical)
 function setOrientation(img) {
   const tempImg = new Image();
   tempImg.src = img.src;
@@ -251,23 +227,19 @@ function setOrientation(img) {
   };
 }
 
-// Show image in gallery
 function showImage(index) {
-  galleryImgEl.style.opacity = 0; // fade out
-
+  galleryImgEl.style.opacity = 0;
   setTimeout(() => {
     galleryImgEl.src = galleryImages[index];
     galleryImgEl.onload = () => {
       setOrientation(galleryImgEl);
-      galleryImgEl.style.opacity = 1; // fade in
+      galleryImgEl.style.opacity = 1;
     };
-  }, 100); // slight delay for smooth fade
+  }, 100);
 }
 
-// Initialize first image (no fade)
 showImage(currentIndex);
 
-// Arrow navigation
 function prevImage() {
   currentIndex = (currentIndex - 1 + galleryImages.length) % galleryImages.length;
   showImage(currentIndex);
@@ -278,19 +250,14 @@ function nextImage() {
   showImage(currentIndex);
 }
 
-// Keyboard navigation
 document.addEventListener("keydown", e => {
   if (e.key === "ArrowLeft") prevImage();
   if (e.key === "ArrowRight") nextImage();
 });
 
-// Click arrow buttons
 prevBtn.addEventListener("click", prevImage);
 nextBtn.addEventListener("click", nextImage);
 
-// =========================
-// Optional: gallery heading typewriter
-// =========================
 function typeWriterFadeHeading(el, text) {
   let i = 0;
   el.style.opacity = 1;
@@ -315,7 +282,6 @@ const galleryObserver = new IntersectionObserver(entries => {
 }, { threshold: 1 });
 
 galleryObserver.observe(galleryHeadingEl);
-
 
 const wheelHeadingEl = document.getElementById("wheelHeading");
 

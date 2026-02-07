@@ -1,4 +1,3 @@
-// ================= WHEEL OF VALENTINE =================
 const wheelCanvas = document.getElementById("dateWheel");
 const ctx = wheelCanvas.getContext("2d");
 const spinBtn = document.getElementById("spinBtn");
@@ -35,7 +34,6 @@ let rotation = 0;
 let spinning = false;
 let hoverIndex = null;
 
-// ================= TOOLTIP =================
 const tooltip = document.createElement("div");
 tooltip.style.position = "fixed";
 tooltip.style.top = "50%";
@@ -53,7 +51,6 @@ tooltip.style.textAlign = "center";
 tooltip.style.zIndex = 1000;
 document.body.appendChild(tooltip);
 
-// ================= DRAW WHEEL =================
 function drawWheel() {
   ctx.clearRect(0, 0, canvasSize, canvasSize);
   ctx.save();
@@ -89,7 +86,6 @@ function drawWheel() {
 
   ctx.restore();
 
-  // pointer
   ctx.beginPath();
   ctx.moveTo(canvasSize/2, 40);
   ctx.lineTo(canvasSize/2 - 15, 2);
@@ -101,7 +97,6 @@ function drawWheel() {
 
 drawWheel();
 
-// ================= HOVER =================
 wheelCanvas.addEventListener("mousemove", (e) => {
   if (spinning) return;
 
@@ -129,52 +124,44 @@ wheelCanvas.addEventListener("mouseleave", () => {
   drawWheel();
 });
 
-// ================= SPIN LOGIC (fixed to trigger popup + confetti) =================
 spinBtn.addEventListener("click", () => {
-    if (spinning) return;
-    spinning = true;
-  
-    spinBtn.style.display = "none"; // hide spin button
-    tooltip.style.display = "none";
-    resultEl.textContent = "";
-  
-    const spins = 5;
-    const targetIndex = 0; // Julian + Hike + Cabin
-    const targetAngle = - (Math.PI/2 - targetIndex * sliceAngle - sliceAngle/2);
-    const totalRotation = spins * 4 * Math.PI + targetAngle - 0.7;
-    const duration = 6000;
-    const start = performance.now();
-  
-    function animate(time) {
-      const elapsed = time - start;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      rotation = eased * totalRotation;
-      drawWheel();
-  
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        spinning = false;
-  
-        // show popup
-        popup.classList.add("show");
-  
-        // start confetti for 3 seconds (same as hearts)
-        startConfetti(10000);
-      }
-    }
-  
-    requestAnimationFrame(animate);
-  });
-  
+  if (spinning) return;
+  spinning = true;
 
-// ================= POPUP CLICK TO CLOSE =================
+  spinBtn.style.display = "none";
+  tooltip.style.display = "none";
+  resultEl.textContent = "";
+
+  const spins = 5;
+  const targetIndex = 0;
+  const targetAngle = - (Math.PI/2 - targetIndex * sliceAngle - sliceAngle/2);
+  const totalRotation = spins * 4 * Math.PI + targetAngle - 0.7;
+  const duration = 10000;
+  const start = performance.now();
+
+  function animate(time) {
+    const elapsed = time - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    rotation = eased * totalRotation;
+    drawWheel();
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      spinning = false;
+      popup.classList.add("show");
+      startConfetti(10000);
+    }
+  }
+
+  requestAnimationFrame(animate);
+});
+
 popup.addEventListener("click", () => {
   popup.classList.remove("show");
 });
 
-// ================= CONFETTI =================
 const confettiCanvas = document.getElementById("confettiCanvas");
 const confettiCtx = confettiCanvas.getContext("2d");
 confettiCanvas.width = window.innerWidth;
@@ -184,7 +171,6 @@ let confettiParticles = [];
 const confettiCount = 150;
 let confettiActive = false;
 
-// create confetti particles
 function createConfetti() {
   confettiParticles = [];
   for (let i = 0; i < confettiCount; i++) {
@@ -201,7 +187,6 @@ function createConfetti() {
   }
 }
 
-// animate confetti
 function drawConfetti() {
   if (!confettiActive) return;
 
@@ -228,15 +213,13 @@ function drawConfetti() {
   requestAnimationFrame(drawConfetti);
 }
 
-// trigger confetti when popup appears
-function startConfetti(duration = 3000) { // same duration as hearts
+function startConfetti(duration = 3000) {
   createConfetti();
   confettiActive = true;
   drawConfetti();
   setTimeout(() => { confettiActive = false; confettiCtx.clearRect(0,0,confettiCanvas.width,confettiCanvas.height); }, duration);
 }
 
-// ================= MODIFY POPUP LOGIC =================
 spinBtn.addEventListener("click", () => {
   if (spinning) return;
   spinning = true;
@@ -245,10 +228,10 @@ spinBtn.addEventListener("click", () => {
   tooltip.style.display = "none";
 
   const spins = 5;
-  const targetIndex = 0; 
+  const targetIndex = 0;
   const targetAngle = - (Math.PI/2 - targetIndex * sliceAngle - sliceAngle/2);
   const totalRotation = spins * 4 * Math.PI + targetAngle - 0.7;
-  const duration = 6000;
+  const duration = 8000;
   const start = performance.now();
 
   function animate(time) {
@@ -262,12 +245,8 @@ spinBtn.addEventListener("click", () => {
       requestAnimationFrame(animate);
     } else {
       spinning = false;
-
-      // show popup
       popup.classList.add("show");
-
-      // start confetti for same duration as hearts
-      startConfetti(3000); 
+      startConfetti(3000);
     }
   }
 
