@@ -45,8 +45,36 @@
       </div>
     </section>
 
+    <section id="wheelSection">
+      <h1 class="wheelTitle" id="wheelHeading"></h1>
+      <div class="wheelContainer">
+        <canvas id="dateWheel" width="500" height="500"></canvas>
+        <button id="spinBtn">Spin</button>
+      </div>
+      <p id="wheelResult"></p>
+    </section>
+
   </div>  
 
+  <!-- ================= POPUP OUTCOME ================= -->
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <div id="popupOutcome">
+    <div id="popupContent">
+      <div class="popupTitle">Julians + Hike + Cabin</div>
+    
+      <a
+        href="https://www.airbnb.com/trips/v1/reservation-details/ro/RESERVATION2_CHECKIN/HMXFRNMZ8D"
+        target="_blank"
+        class="popupLink"
+      >
+        See our cabin
+      </a>
+    </div>
+  </div>
+
   <script src="surprise.js"></script>
+  <script src="wheel.js"></script>
 </body>
 </html>

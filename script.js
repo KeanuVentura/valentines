@@ -1,19 +1,14 @@
+// =========================
+// BACKGROUND MUSIC (INDEX)
+// =========================
 const music = new Audio("song.mp3");
 music.loop = true;
+music.currentTime = 0;
 
-// Resume from previous time if available
-const savedTime = localStorage.getItem("musicTime");
-if (savedTime) music.currentTime = parseFloat(savedTime);
-
-// Play music on first user interaction (required for autoplay in browsers)
+// Play on first interaction
 document.body.addEventListener("click", () => {
-  music.play().catch(e => console.log("Autoplay prevented:", e));
+  music.play().catch(() => {});
 }, { once: true });
-
-// Save playback time every second
-setInterval(() => {
-  localStorage.setItem("musicTime", music.currentTime);
-}, 1000);
 
 const noBtn = document.getElementById("noBtn");
 const yesBtn = document.getElementById("yesBtn");
@@ -205,7 +200,9 @@ noBtn.addEventListener("click", (e) => {
 
             // redirect to surprise.html after another second
             setTimeout(() => {
-                window.location.href = "surprise.html";
+              localStorage.setItem("carryMusicTime", music.currentTime);
+
+              window.location.href = "surprise.html";
             }, 1000);
         }, 1000); // initial push-down delay
     }

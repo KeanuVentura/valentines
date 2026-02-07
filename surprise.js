@@ -1,20 +1,17 @@
-// --------------------------
-// Background music
-// --------------------------
+// =========================
+// BACKGROUND MUSIC (SURPRISE)
+// =========================
 const music = new Audio("song.mp3");
 music.loop = true;
 
-// Resume from saved time if available
-const savedTime = localStorage.getItem("musicTime");
-if (savedTime) music.currentTime = parseFloat(savedTime);
+// resume from index page if available
+const carryTime = localStorage.getItem("carryMusicTime");
+if (carryTime) {
+  music.currentTime = parseFloat(carryTime);
+}
 
-// Autoplay on first interaction (or try immediately)
-music.play().catch(e => console.log("Autoplay prevented:", e));
-
-// Save playback time every second
-setInterval(() => {
-  localStorage.setItem("musicTime", music.currentTime);
-}, 1000);
+// autoplay on load (allowed because user already interacted)
+music.play().catch(() => {});
 
 // =========================
 // HEARTS
@@ -319,3 +316,19 @@ const galleryObserver = new IntersectionObserver(entries => {
 
 galleryObserver.observe(galleryHeadingEl);
 
+
+const wheelHeadingEl = document.getElementById("wheelHeading");
+
+const wheelObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      typeWriterFadeHeading(
+        wheelHeadingEl,
+        "Spin for our Valentine's Weekend Date"
+      );
+      wheelObserver.disconnect();
+    }
+  });
+}, { threshold: 1 });
+
+wheelObserver.observe(wheelHeadingEl);
