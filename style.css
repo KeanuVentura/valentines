@@ -42,9 +42,25 @@
   cursor: pointer;
 }
 
-#indexPage #yesBtn {
-  background-color: #4CAF50;
-  color: white;
+/* UPDATED: Yes/No Buttons Matching "See Our Cabin" */
+#indexPage #yesBtn,
+#indexPage #noBtn {
+  background-color: white;
+  color: #ff6b81; /* pink accent */
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 14px 36px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
+}
+
+#indexPage #yesBtn:hover,
+#indexPage #noBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
 }
 
 #indexPage #noPlaceholder {
@@ -54,8 +70,6 @@
 }
 
 #indexPage #noBtn {
-  background-color: #f44336;
-  color: white;
   position: fixed;
   transition: left 0.35s ease, top 0.35s ease;
 }
@@ -100,6 +114,7 @@
   animation: shake 0.35s ease;
 }
 
+/* ------------------- Surprise Page Styles (unchanged) ------------------- */
 #surprisePage {
   font-family: 'Tahoma', Geneva, sans-serif;
   font-size: 1.5rem;
